@@ -18,13 +18,13 @@
 //  Based on original Protocol Buffers design by
 //  Sanjay Ghemawat, Jeff Dean, and others.
 
+#include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/compiler/as3/as3_file.h>
 #include <google/protobuf/compiler/as3/as3_enum.h>
 #include <google/protobuf/compiler/as3/as3_service.h>
 #include <google/protobuf/compiler/as3/as3_extension.h>
 #include <google/protobuf/compiler/as3/as3_helpers.h>
 #include <google/protobuf/compiler/as3/as3_message.h>
-#include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
 #include <google/protobuf/descriptor.pb.h>
