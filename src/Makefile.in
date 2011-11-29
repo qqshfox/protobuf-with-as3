@@ -124,7 +124,10 @@ am_libprotoc_la_OBJECTS = code_generator.lo command_line_interface.lo \
 	java_extension.lo java_field.lo java_file.lo java_generator.lo \
 	java_helpers.lo java_message.lo java_message_field.lo \
 	java_primitive_field.lo java_service.lo java_string_field.lo \
-	python_generator.lo
+	python_generator.lo as3_enum.lo as3_enum_field.lo \
+	as3_extension.lo as3_field.lo as3_file.lo as3_generator.lo \
+	as3_helpers.lo as3_message.lo as3_message_field.lo \
+	as3_primitive_field.lo as3_service.lo
 libprotoc_la_OBJECTS = $(am_libprotoc_la_OBJECTS)
 libprotoc_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -315,7 +318,8 @@ am__nobase_include_HEADERS_DIST = google/protobuf/stubs/common.h \
 	google/protobuf/compiler/plugin.pb.h \
 	google/protobuf/compiler/cpp/cpp_generator.h \
 	google/protobuf/compiler/java/java_generator.h \
-	google/protobuf/compiler/python/python_generator.h
+	google/protobuf/compiler/python/python_generator.h \
+	google/protobuf/compiler/as3/as3_generator.h
 HEADERS = $(nobase_include_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -342,6 +346,7 @@ CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
+DLLTOOL = @DLLTOOL@
 DSYMUTIL = @DSYMUTIL@
 DUMPBIN = @DUMPBIN@
 ECHO_C = @ECHO_C@
@@ -366,6 +371,7 @@ LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
+MANIFEST_TOOL = @MANIFEST_TOOL@
 MKDIR_P = @MKDIR_P@
 NM = @NM@
 NMEDIT = @NMEDIT@
@@ -397,6 +403,7 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
 ac_ct_CXX = @ac_ct_CXX@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
@@ -431,7 +438,6 @@ libdir = @libdir@
 libexecdir = @libexecdir@
 localedir = @localedir@
 localstatedir = @localstatedir@
-lt_ECHO = @lt_ECHO@
 mandir = @mandir@
 mkdir_p = @mkdir_p@
 oldincludedir = @oldincludedir@
@@ -512,7 +518,8 @@ nobase_include_HEADERS = \
   google/protobuf/compiler/plugin.pb.h                         \
   google/protobuf/compiler/cpp/cpp_generator.h                 \
   google/protobuf/compiler/java/java_generator.h               \
-  google/protobuf/compiler/python/python_generator.h
+  google/protobuf/compiler/python/python_generator.h           \
+  google/protobuf/compiler/as3/as3_generator.h
 
 lib_LTLIBRARIES = libprotobuf-lite.la libprotobuf.la libprotoc.la
 libprotobuf_lite_la_LIBADD = $(PTHREAD_LIBS)
@@ -618,7 +625,28 @@ libprotoc_la_SOURCES = \
   google/protobuf/compiler/java/java_service.h                 \
   google/protobuf/compiler/java/java_string_field.cc           \
   google/protobuf/compiler/java/java_string_field.h            \
-  google/protobuf/compiler/python/python_generator.cc
+  google/protobuf/compiler/python/python_generator.cc          \
+  google/protobuf/compiler/as3/as3_enum.cc                     \
+  google/protobuf/compiler/as3/as3_enum.h                      \
+  google/protobuf/compiler/as3/as3_enum_field.cc               \
+  google/protobuf/compiler/as3/as3_enum_field.h                \
+  google/protobuf/compiler/as3/as3_extension.cc                \
+  google/protobuf/compiler/as3/as3_extension.h                 \
+  google/protobuf/compiler/as3/as3_field.cc                    \
+  google/protobuf/compiler/as3/as3_field.h                     \
+  google/protobuf/compiler/as3/as3_file.cc                     \
+  google/protobuf/compiler/as3/as3_file.h                      \
+  google/protobuf/compiler/as3/as3_generator.cc                \
+  google/protobuf/compiler/as3/as3_helpers.cc                  \
+  google/protobuf/compiler/as3/as3_helpers.h                   \
+  google/protobuf/compiler/as3/as3_message.cc                  \
+  google/protobuf/compiler/as3/as3_message.h                   \
+  google/protobuf/compiler/as3/as3_message_field.cc            \
+  google/protobuf/compiler/as3/as3_message_field.h             \
+  google/protobuf/compiler/as3/as3_primitive_field.cc          \
+  google/protobuf/compiler/as3/as3_primitive_field.h           \
+  google/protobuf/compiler/as3/as3_service.cc                  \
+  google/protobuf/compiler/as3/as3_service.h
 
 protoc_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la
 protoc_SOURCES = google/protobuf/compiler/main.cc
@@ -931,6 +959,17 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_enum.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_enum_field.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_extension.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_field.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_file.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_generator.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_helpers.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_message.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_message_field.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_primitive_field.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/as3_service.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/code_generator.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/coded_stream.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/command_line_interface.Plo@am__quote@
@@ -1517,6 +1556,83 @@ python_generator.lo: google/protobuf/compiler/python/python_generator.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/python/python_generator.cc' object='python_generator.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o python_generator.lo `test -f 'google/protobuf/compiler/python/python_generator.cc' || echo '$(srcdir)/'`google/protobuf/compiler/python/python_generator.cc
+
+as3_enum.lo: google/protobuf/compiler/as3/as3_enum.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_enum.lo -MD -MP -MF $(DEPDIR)/as3_enum.Tpo -c -o as3_enum.lo `test -f 'google/protobuf/compiler/as3/as3_enum.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_enum.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_enum.Tpo $(DEPDIR)/as3_enum.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_enum.cc' object='as3_enum.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_enum.lo `test -f 'google/protobuf/compiler/as3/as3_enum.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_enum.cc
+
+as3_enum_field.lo: google/protobuf/compiler/as3/as3_enum_field.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_enum_field.lo -MD -MP -MF $(DEPDIR)/as3_enum_field.Tpo -c -o as3_enum_field.lo `test -f 'google/protobuf/compiler/as3/as3_enum_field.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_enum_field.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_enum_field.Tpo $(DEPDIR)/as3_enum_field.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_enum_field.cc' object='as3_enum_field.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_enum_field.lo `test -f 'google/protobuf/compiler/as3/as3_enum_field.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_enum_field.cc
+
+as3_extension.lo: google/protobuf/compiler/as3/as3_extension.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_extension.lo -MD -MP -MF $(DEPDIR)/as3_extension.Tpo -c -o as3_extension.lo `test -f 'google/protobuf/compiler/as3/as3_extension.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_extension.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_extension.Tpo $(DEPDIR)/as3_extension.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_extension.cc' object='as3_extension.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_extension.lo `test -f 'google/protobuf/compiler/as3/as3_extension.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_extension.cc
+
+as3_field.lo: google/protobuf/compiler/as3/as3_field.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_field.lo -MD -MP -MF $(DEPDIR)/as3_field.Tpo -c -o as3_field.lo `test -f 'google/protobuf/compiler/as3/as3_field.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_field.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_field.Tpo $(DEPDIR)/as3_field.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_field.cc' object='as3_field.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_field.lo `test -f 'google/protobuf/compiler/as3/as3_field.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_field.cc
+
+as3_file.lo: google/protobuf/compiler/as3/as3_file.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_file.lo -MD -MP -MF $(DEPDIR)/as3_file.Tpo -c -o as3_file.lo `test -f 'google/protobuf/compiler/as3/as3_file.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_file.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_file.Tpo $(DEPDIR)/as3_file.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_file.cc' object='as3_file.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_file.lo `test -f 'google/protobuf/compiler/as3/as3_file.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_file.cc
+
+as3_generator.lo: google/protobuf/compiler/as3/as3_generator.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_generator.lo -MD -MP -MF $(DEPDIR)/as3_generator.Tpo -c -o as3_generator.lo `test -f 'google/protobuf/compiler/as3/as3_generator.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_generator.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_generator.Tpo $(DEPDIR)/as3_generator.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_generator.cc' object='as3_generator.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_generator.lo `test -f 'google/protobuf/compiler/as3/as3_generator.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_generator.cc
+
+as3_helpers.lo: google/protobuf/compiler/as3/as3_helpers.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_helpers.lo -MD -MP -MF $(DEPDIR)/as3_helpers.Tpo -c -o as3_helpers.lo `test -f 'google/protobuf/compiler/as3/as3_helpers.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_helpers.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_helpers.Tpo $(DEPDIR)/as3_helpers.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_helpers.cc' object='as3_helpers.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_helpers.lo `test -f 'google/protobuf/compiler/as3/as3_helpers.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_helpers.cc
+
+as3_message.lo: google/protobuf/compiler/as3/as3_message.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_message.lo -MD -MP -MF $(DEPDIR)/as3_message.Tpo -c -o as3_message.lo `test -f 'google/protobuf/compiler/as3/as3_message.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_message.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_message.Tpo $(DEPDIR)/as3_message.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_message.cc' object='as3_message.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_message.lo `test -f 'google/protobuf/compiler/as3/as3_message.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_message.cc
+
+as3_message_field.lo: google/protobuf/compiler/as3/as3_message_field.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_message_field.lo -MD -MP -MF $(DEPDIR)/as3_message_field.Tpo -c -o as3_message_field.lo `test -f 'google/protobuf/compiler/as3/as3_message_field.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_message_field.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_message_field.Tpo $(DEPDIR)/as3_message_field.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_message_field.cc' object='as3_message_field.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_message_field.lo `test -f 'google/protobuf/compiler/as3/as3_message_field.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_message_field.cc
+
+as3_primitive_field.lo: google/protobuf/compiler/as3/as3_primitive_field.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_primitive_field.lo -MD -MP -MF $(DEPDIR)/as3_primitive_field.Tpo -c -o as3_primitive_field.lo `test -f 'google/protobuf/compiler/as3/as3_primitive_field.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_primitive_field.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_primitive_field.Tpo $(DEPDIR)/as3_primitive_field.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_primitive_field.cc' object='as3_primitive_field.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_primitive_field.lo `test -f 'google/protobuf/compiler/as3/as3_primitive_field.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_primitive_field.cc
+
+as3_service.lo: google/protobuf/compiler/as3/as3_service.cc
+@am__fastdepCXX_TRUE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT as3_service.lo -MD -MP -MF $(DEPDIR)/as3_service.Tpo -c -o as3_service.lo `test -f 'google/protobuf/compiler/as3/as3_service.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_service.cc
+@am__fastdepCXX_TRUE@	$(am__mv) $(DEPDIR)/as3_service.Tpo $(DEPDIR)/as3_service.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='google/protobuf/compiler/as3/as3_service.cc' object='as3_service.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(LIBTOOL)  --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o as3_service.lo `test -f 'google/protobuf/compiler/as3/as3_service.cc' || echo '$(srcdir)/'`google/protobuf/compiler/as3/as3_service.cc
 
 protobuf_lazy_descriptor_test-cpp_unittest.o: google/protobuf/compiler/cpp/cpp_unittest.cc
 @am__fastdepCXX_TRUE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(protobuf_lazy_descriptor_test_CPPFLAGS) $(CPPFLAGS) $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) -MT protobuf_lazy_descriptor_test-cpp_unittest.o -MD -MP -MF $(DEPDIR)/protobuf_lazy_descriptor_test-cpp_unittest.Tpo -c -o protobuf_lazy_descriptor_test-cpp_unittest.o `test -f 'google/protobuf/compiler/cpp/cpp_unittest.cc' || echo '$(srcdir)/'`google/protobuf/compiler/cpp/cpp_unittest.cc
