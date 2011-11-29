@@ -72,7 +72,8 @@ nobase_include_HEADERS =                                       \
   google/protobuf/compiler/plugin.pb.h                         \
   google/protobuf/compiler/cpp/cpp_generator.h                 \
   google/protobuf/compiler/java/java_generator.h               \
-  google/protobuf/compiler/python/python_generator.h
+  google/protobuf/compiler/python/python_generator.h           \
+  google/protobuf/compiler/as3/as3_generator.h
 
 lib_LTLIBRARIES = libprotobuf-lite.la libprotobuf.la libprotoc.la
 
@@ -178,7 +179,28 @@ libprotoc_la_SOURCES =                                         \
   google/protobuf/compiler/java/java_primitive_field.h         \
   google/protobuf/compiler/java/java_service.cc                \
   google/protobuf/compiler/java/java_service.h                 \
-  google/protobuf/compiler/python/python_generator.cc
+  google/protobuf/compiler/python/python_generator.cc          \
+  google/protobuf/compiler/as3/as3_enum.cc                     \
+  google/protobuf/compiler/as3/as3_enum.h                      \
+  google/protobuf/compiler/as3/as3_enum_field.cc               \
+  google/protobuf/compiler/as3/as3_enum_field.h                \
+  google/protobuf/compiler/as3/as3_extension.cc                \
+  google/protobuf/compiler/as3/as3_extension.h                 \
+  google/protobuf/compiler/as3/as3_field.cc                    \
+  google/protobuf/compiler/as3/as3_field.h                     \
+  google/protobuf/compiler/as3/as3_file.cc                     \
+  google/protobuf/compiler/as3/as3_file.h                      \
+  google/protobuf/compiler/as3/as3_generator.cc                \
+  google/protobuf/compiler/as3/as3_helpers.cc                  \
+  google/protobuf/compiler/as3/as3_helpers.h                   \
+  google/protobuf/compiler/as3/as3_message.cc                  \
+  google/protobuf/compiler/as3/as3_message.h                   \
+  google/protobuf/compiler/as3/as3_message_field.cc            \
+  google/protobuf/compiler/as3/as3_message_field.h             \
+  google/protobuf/compiler/as3/as3_primitive_field.cc          \
+  google/protobuf/compiler/as3/as3_primitive_field.h           \
+  google/protobuf/compiler/as3/as3_service.cc                  \
+  google/protobuf/compiler/as3/as3_service.h
 
 bin_PROGRAMS = protoc
 protoc_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la
